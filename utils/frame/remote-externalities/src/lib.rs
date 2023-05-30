@@ -752,6 +752,7 @@ where
 			let prefixed_top_key = PrefixedStorageKey::new(prefixed_top_key.clone().0);
 			let un_prefixed = match ChildType::from_prefixed_key(&prefixed_top_key) {
 				Some((ChildType::ParentKeyId, storage_key)) => storage_key,
+				Some((ChildType::BinaryMerkleTree, _)) => todo!(),
 				None => {
 					log::error!(target: LOG_TARGET, "invalid key: {:?}", prefixed_top_key);
 					return Err("Invalid child key")

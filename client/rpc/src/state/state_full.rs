@@ -511,6 +511,7 @@ where
 				let child_info = match ChildType::from_prefixed_key(&storage_key) {
 					Some((ChildType::ParentKeyId, storage_key)) =>
 						ChildInfo::new_default(storage_key),
+					Some((ChildType::BinaryMerkleTree, _)) => todo!(),
 					None => return Err(sp_blockchain::Error::InvalidChildStorageKey),
 				};
 				self.client
@@ -537,6 +538,7 @@ where
 				let child_info = match ChildType::from_prefixed_key(&storage_key) {
 					Some((ChildType::ParentKeyId, storage_key)) =>
 						ChildInfo::new_default(storage_key),
+					Some((ChildType::BinaryMerkleTree, _)) => todo!(),
 					None => return Err(sp_blockchain::Error::InvalidChildStorageKey),
 				};
 				self.client.child_storage_keys(block, child_info, Some(&prefix), None)
@@ -558,6 +560,7 @@ where
 				let child_info = match ChildType::from_prefixed_key(&storage_key) {
 					Some((ChildType::ParentKeyId, storage_key)) =>
 						ChildInfo::new_default(storage_key),
+					Some((ChildType::BinaryMerkleTree, _)) => todo!(),
 					None => return Err(sp_blockchain::Error::InvalidChildStorageKey),
 				};
 				self.client.child_storage_keys(
@@ -582,6 +585,7 @@ where
 				let child_info = match ChildType::from_prefixed_key(&storage_key) {
 					Some((ChildType::ParentKeyId, storage_key)) =>
 						ChildInfo::new_default(storage_key),
+					Some((ChildType::BinaryMerkleTree, _)) => todo!(),
 					None => return Err(sp_blockchain::Error::InvalidChildStorageKey),
 				};
 				self.client.child_storage(block, &child_info, &key)
@@ -623,6 +627,7 @@ where
 				let child_info = match ChildType::from_prefixed_key(&storage_key) {
 					Some((ChildType::ParentKeyId, storage_key)) =>
 						ChildInfo::new_default(storage_key),
+					Some((ChildType::BinaryMerkleTree, _)) => todo!(),
 					None => return Err(sp_blockchain::Error::InvalidChildStorageKey),
 				};
 				self.client.child_storage_hash(block, &child_info, &key)

@@ -657,6 +657,7 @@ where
 	) -> (H::Out, bool, S::Overlay) {
 		let default_root = match child_info.child_type() {
 			ChildType::ParentKeyId => empty_child_trie_root::<sp_trie::LayoutV1<H>>(),
+			ChildType::BinaryMerkleTree => todo!(),
 		};
 		let mut write_overlay = S::Overlay::default();
 		let child_root = match self.child_root(child_info) {

@@ -252,6 +252,7 @@ pub const TRIE_VALUE_NODE_THRESHOLD: u32 = 33;
 pub enum ChildInfo {
 	/// This is the one used by default.
 	ParentKeyId(ChildTrieParentKeyId),
+	BinaryMerkleTree(ChildTrieParentKeyId), // TODO: Update the struct name
 }
 
 impl ChildInfo {
@@ -272,7 +273,7 @@ impl ChildInfo {
 	/// are not compatible.
 	pub fn try_update(&mut self, other: &ChildInfo) -> bool {
 		match self {
-			ChildInfo::ParentKeyId(child_trie) => child_trie.try_update(other),
+			ChildInfo::ParentKeyId(child_trie) | ChildInfo::BinaryMerkleTree(child_trie) => child_trie.try_update(other),
 		}
 	}
 
@@ -282,7 +283,7 @@ impl ChildInfo {
 	#[inline]
 	pub fn keyspace(&self) -> &[u8] {
 		match self {
-			ChildInfo::ParentKeyId(..) => self.storage_key(),
+			ChildInfo::ParentKeyId(..) | ChildInfo::BinaryMerkleTree(..) => self.storage_key(),
 		}
 	}
 
@@ -292,6 +293,7 @@ impl ChildInfo {
 	pub fn storage_key(&self) -> &[u8] {
 		match self {
 			ChildInfo::ParentKeyId(ChildTrieParentKeyId { data }) => &data[..],
+			ChildInfo::BinaryMerkleTree(ChildTrieParentKeyId { data }) => &data[..],
 		}
 	}
 
@@ -301,6 +303,7 @@ impl ChildInfo {
 		match self {
 			ChildInfo::ParentKeyId(ChildTrieParentKeyId { data }) =>
 				ChildType::ParentKeyId.new_prefixed_key(data.as_slice()),
+			ChildInfo::BinaryMerkleTree(_) => todo!(),
 		}
 	}
 
@@ -312,6 +315,7 @@ impl ChildInfo {
 				ChildType::ParentKeyId.do_prefix_key(&mut data);
 				PrefixedStorageKey(data)
 			},
+			ChildInfo::BinaryMerkleTree(_) => todo!(),
 		}
 	}
 
@@ -319,6 +323,7 @@ impl ChildInfo {
 	pub fn child_type(&self) -> ChildType {
 		match self {
 			ChildInfo::ParentKeyId(..) => ChildType::ParentKeyId,
+			ChildInfo::BinaryMerkleTree(..) => ChildType::BinaryMerkleTree,
 		}
 	}
 }
@@ -410,6 +415,7 @@ impl ChildTrieParentKeyId {
 	fn try_update(&mut self, other: &ChildInfo) -> bool {
 		match other {
 			ChildInfo::ParentKeyId(other) => self.data[..] == other.data[..],
+			ChildInfo::BinaryMerkleTree(other) => self.data[..] == other.data[..],
 		}
 	}
 }

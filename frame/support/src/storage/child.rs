@@ -44,6 +44,7 @@ pub fn get<T: Decode + Sized>(child_info: &ChildInfo, key: &[u8]) -> Option<T> {
 				})
 			})
 		},
+		ChildType::BinaryMerkleTree => todo!(),
 	}
 }
 
@@ -75,6 +76,7 @@ pub fn put<T: Encode>(child_info: &ChildInfo, key: &[u8], value: &T) {
 		ChildType::ParentKeyId => value.using_encoded(|slice| {
 			sp_io::default_child_storage::set(child_info.storage_key(), key, slice)
 		}),
+		ChildType::BinaryMerkleTree => todo!(),
 	}
 }
 
@@ -114,6 +116,7 @@ pub fn exists(child_info: &ChildInfo, key: &[u8]) -> bool {
 	match child_info.child_type() {
 		ChildType::ParentKeyId =>
 			sp_io::default_child_storage::exists(child_info.storage_key(), key),
+		ChildType::BinaryMerkleTree => todo!(),
 	}
 }
 
@@ -141,6 +144,7 @@ pub fn kill_storage(child_info: &ChildInfo, limit: Option<u32>) -> KillStorageRe
 	match child_info.child_type() {
 		ChildType::ParentKeyId =>
 			sp_io::default_child_storage::storage_kill(child_info.storage_key(), limit),
+		ChildType::BinaryMerkleTree => todo!(),
 	}
 }
 
@@ -187,6 +191,7 @@ pub fn clear_storage(
 	let r = match child_info.child_type() {
 		ChildType::ParentKeyId =>
 			sp_io::default_child_storage::storage_kill(child_info.storage_key(), maybe_limit),
+		ChildType::BinaryMerkleTree => todo!(),
 	};
 	use sp_io::KillStorageResult::*;
 	let (maybe_cursor, backend) = match r {
@@ -202,6 +207,7 @@ pub fn kill(child_info: &ChildInfo, key: &[u8]) {
 		ChildType::ParentKeyId => {
 			sp_io::default_child_storage::clear(child_info.storage_key(), key);
 		},
+		ChildType::BinaryMerkleTree => todo!(),
 	}
 }
 
@@ -209,6 +215,7 @@ pub fn kill(child_info: &ChildInfo, key: &[u8]) {
 pub fn get_raw(child_info: &ChildInfo, key: &[u8]) -> Option<Vec<u8>> {
 	match child_info.child_type() {
 		ChildType::ParentKeyId => sp_io::default_child_storage::get(child_info.storage_key(), key),
+		ChildType::BinaryMerkleTree => todo!(),
 	}
 }
 
@@ -217,6 +224,7 @@ pub fn put_raw(child_info: &ChildInfo, key: &[u8], value: &[u8]) {
 	match child_info.child_type() {
 		ChildType::ParentKeyId =>
 			sp_io::default_child_storage::set(child_info.storage_key(), key, value),
+		ChildType::BinaryMerkleTree => todo!(),
 	}
 }
 
@@ -225,6 +233,7 @@ pub fn root(child_info: &ChildInfo, version: StateVersion) -> Vec<u8> {
 	match child_info.child_type() {
 		ChildType::ParentKeyId =>
 			sp_io::default_child_storage::root(child_info.storage_key(), version),
+		ChildType::BinaryMerkleTree => todo!(),
 	}
 }
 
@@ -235,5 +244,6 @@ pub fn len(child_info: &ChildInfo, key: &[u8]) -> Option<u32> {
 			let mut buffer = [0; 0];
 			sp_io::default_child_storage::read(child_info.storage_key(), key, &mut buffer, 0)
 		},
+		ChildType::BinaryMerkleTree => todo!(),
 	}
 }

@@ -671,6 +671,7 @@ where
 										match ChildType::from_prefixed_key(storage_key) {
 											Some((ChildType::ParentKeyId, storage_key)) =>
 												storage_key,
+											Some((ChildType::BinaryMerkleTree, _)) => todo!(),
 											None =>
 												return Err(Error::Backend(
 													"Invalid child storage key.".to_string(),
@@ -1297,6 +1298,7 @@ where
 			match ChildType::from_prefixed_key(storage_key) {
 				Some((ChildType::ParentKeyId, storage_key)) =>
 					Ok(ChildInfo::new_default(storage_key)),
+				Some((ChildType::BinaryMerkleTree, _)) => todo!(),
 				None => Err(Error::Backend("Invalid child storage key.".to_string())),
 			}
 		};
