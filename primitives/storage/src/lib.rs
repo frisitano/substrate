@@ -213,6 +213,9 @@ pub mod well_known_keys {
 	/// Prefix of the default child storage keys in the top trie.
 	pub const DEFAULT_CHILD_STORAGE_KEY_PREFIX: &[u8] = b":child_storage:default:";
 
+	/// Prefix of the storage keys in the default binary merkle child tree.
+	pub const DEFAULT_BINARY_MERKLE_CHILD_STORAGE_KEY_PREFIX: &[u8] = b":child_storage:default:binary_merkle_tree";
+
 	/// Whether a key is a default child storage key.
 	///
 	/// This is convenience function which basically checks if the given `key` starts
@@ -330,6 +333,7 @@ pub enum ChildType {
 	/// If runtime module ensures that the child key is a unique id that will
 	/// only be used once, its parent key is used as a child trie unique id.
 	ParentKeyId = 1,
+	BinaryMerkleTree,
 }
 
 impl ChildType {
@@ -337,6 +341,7 @@ impl ChildType {
 	pub fn new(repr: u32) -> Option<ChildType> {
 		Some(match repr {
 			r if r == ChildType::ParentKeyId as u32 => ChildType::ParentKeyId,
+			r if r == ChildType::BinaryMerkleTree as u32 => ChildType::BinaryMerkleTree,
 			_ => return None,
 		})
 	}
@@ -380,6 +385,7 @@ impl ChildType {
 	pub fn parent_prefix(&self) -> &'static [u8] {
 		match self {
 			&ChildType::ParentKeyId => well_known_keys::DEFAULT_CHILD_STORAGE_KEY_PREFIX,
+			&ChildType::BinaryMerkleTree => well_known_keys::DEFAULT_BINARY_MERKLE_CHILD_STORAGE_KEY_PREFIX,
 		}
 	}
 }
