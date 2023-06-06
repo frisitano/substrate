@@ -370,6 +370,14 @@ impl<B: BlockT> StateBackend<HashFor<B>> for BenchmarkingState<B> {
 			.child_storage(child_info, key)
 	}
 
+	fn binary_merkle_tree_child_storage(
+		&self,
+		child_info: &ChildInfo,
+		index: &u64,
+	) -> Result<Option<Vec<u8>>, Self::Error> {
+		unimplemented!()
+	}
+
 	fn child_storage_hash(
 		&self,
 		child_info: &ChildInfo,

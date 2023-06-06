@@ -232,6 +232,7 @@ members = [
 	"primitives/transaction-pool",
 	"primitives/transaction-storage-proof",
 	"primitives/trie",
+	"primitives/binary-merkle-child-tree",
 	"primitives/version",
 	"primitives/version/proc-macro",
 	"primitives/wasm-interface",

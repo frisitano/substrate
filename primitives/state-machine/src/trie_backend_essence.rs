@@ -573,6 +573,21 @@ where
 		})
 	}
 
+	/// Get the value of binary merkle child storage at given index.
+	pub fn binary_merkle_tree_child_storage(
+		&self,
+		child_info: &ChildInfo,
+		index: &u64,
+	) -> Result<Option<StorageValue>> {
+		let child_root = match self.child_root(child_info)? {
+			Some(root) => root,
+			None => return Ok(None),
+		};
+
+		let map_e = |e| format!("Trie lookup error: {}", e);
+		sp_binary_merkle_tree::read_child_tree_value(self, &child_root, index, None).map_err(map_e)
+	}
+
 	/// Create a raw iterator over the storage.
 	pub fn raw_iter(&self, args: IterArgs) -> Result<RawIter<S, H, C>> {
 		let root = if let Some(child_info) = args.child_info.as_ref() {

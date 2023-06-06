@@ -198,6 +198,13 @@ pub trait Backend<H: Hasher>: sp_std::fmt::Debug {
 		key: &[u8],
 	) -> Result<Option<StorageValue>, Self::Error>;
 
+	/// Get keyed child storage or None if there is nothing associated.
+	fn binary_merkle_tree_child_storage(
+		&self,
+		child_info: &ChildInfo,
+		index: &u64,
+	) -> Result<Option<StorageValue>, Self::Error>;
+
 	/// Get child keyed storage value hash or None if there is nothing associated.
 	fn child_storage_hash(
 		&self,

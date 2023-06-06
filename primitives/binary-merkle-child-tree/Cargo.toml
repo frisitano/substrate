@@ -1,0 +1,17 @@
+[package]
+name = "sp-binary-merkle-tree"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+merkle-tree-db = {git = "https://github.com/frisitano/merkle-tree-db.git", branch = "master", default-features = false }
+sp-std = { version = "6.0.0", default-features = false, path = "../std" }
+
+[features]
+default = ["std"]
+std = [
+	"merkle-tree-db/std",
+    "sp-std/std"
+]

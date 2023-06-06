@@ -269,6 +269,19 @@ impl ChildInfo {
 		ChildInfo::ParentKeyId(ChildTrieParentKeyId { data: storage_key })
 	}
 
+		/// Instantiates child information for a default child trie
+	/// of kind `ChildType::ParentKeyId`, using an unprefixed parent
+	/// storage key.
+	pub fn new_binary_merkle_tree(storage_key: &[u8]) -> Self {
+		let data = storage_key.to_vec();
+		ChildInfo::BinaryMerkleTree(ChildTrieParentKeyId { data })
+	}
+
+	/// Same as `new_default` but with `Vec<u8>` as input.
+	pub fn new_binary_merkle_tree_from_vec(storage_key: Vec<u8>) -> Self {
+		ChildInfo::BinaryMerkleTree(ChildTrieParentKeyId { data: storage_key })
+	}
+
 	/// Try to update with another instance, return false if both instance
 	/// are not compatible.
 	pub fn try_update(&mut self, other: &ChildInfo) -> bool {

@@ -103,6 +103,15 @@ pub trait Externalities: ExtensionStore {
 	/// Returns an `Option` that holds the SCALE encoded hash.
 	fn child_storage(&self, child_info: &ChildInfo, key: &[u8]) -> Option<Vec<u8>>;
 
+	/// Read binary merkle child tree runtime storage.
+	///
+	/// Returns an `Option` that holds the SCALE encoded hash.
+	fn binary_merkle_tree_child_storage(
+		&self,
+		child_info: &ChildInfo,
+		index: &u64,
+	) -> Option<Vec<u8>>;
+	
 	/// Set storage entry `key` of current contract being called (effective immediately).
 	fn set_storage(&mut self, key: Vec<u8>, value: Vec<u8>) {
 		self.place_storage(key, Some(value));

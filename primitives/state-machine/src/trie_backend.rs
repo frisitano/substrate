@@ -318,6 +318,14 @@ where
 		self.essence.child_storage(child_info, key)
 	}
 
+	fn binary_merkle_tree_child_storage(
+		&self,
+		child_info: &ChildInfo,
+		index: &u64,
+	) -> Result<Option<StorageValue>, Self::Error> {
+		self.essence.binary_merkle_tree_child_storage(child_info, index)
+	}
+
 	fn next_storage_key(&self, key: &[u8]) -> Result<Option<StorageKey>, Self::Error> {
 		let (is_cached, mut cache) = access_cache(&self.next_storage_key_cache, Option::take)
 			.map(|cache| (cache.last_key == key, cache))

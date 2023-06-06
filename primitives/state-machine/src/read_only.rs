@@ -107,6 +107,16 @@ where
 			.expect("Backed failed for child_storage in ReadOnlyExternalities")
 	}
 
+	fn binary_merkle_tree_child_storage(
+		&self,
+		child_info: &ChildInfo,
+		index: &u64,
+	) -> Option<StorageValue> {
+		self.backend
+			.binary_merkle_tree_child_storage(child_info, index)
+			.expect("Backed failed for child_storage in ReadOnlyExternalities")
+	}
+
 	fn child_storage_hash(&self, child_info: &ChildInfo, key: &[u8]) -> Option<Vec<u8>> {
 		self.backend
 			.child_storage_hash(child_info, key)

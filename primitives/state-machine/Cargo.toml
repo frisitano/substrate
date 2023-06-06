@@ -27,6 +27,8 @@ sp-externalities = { version = "0.14.0", default-features = false, path = "../ex
 sp-panic-handler = { version = "6.0.0", optional = true, path = "../panic-handler" }
 sp-std = { version = "6.0.0", default-features = false, path = "../std" }
 sp-trie = { version = "8.0.0", default-features = false, path = "../trie" }
+sp-binary-merkle-tree = { default-features = false, path = "../binary-merkle-child-tree" }
+merkle-tree-db = {git = "https://github.com/frisitano/merkle-tree-db.git", branch = "master", default-features = false}
 
 [dev-dependencies]
 array-bytes = "4.1"

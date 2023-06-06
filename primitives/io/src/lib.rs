@@ -495,6 +495,14 @@ pub trait DefaultChildStorage {
 	}
 }
 
+#[runtime_interface]
+pub trait BinaryMerkleTreeChildStorage {
+	fn get_leaf(&self, storage_key: &[u8], index: &u64) -> Option<Vec<u8>> {
+		let child_info = ChildInfo::new_binary_merkle_tree(storage_key);
+		self.binary_merkle_tree_child_storage(&child_info, index).map(|s| s.to_vec())
+	}
+}
+
 /// Interface that provides trie related functionality.
 #[runtime_interface]
 pub trait Trie {

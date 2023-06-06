@@ -249,6 +249,16 @@ where
 		result
 	}
 
+	fn binary_merkle_tree_child_storage(
+		&self,
+		child_info: &ChildInfo,
+		index: &u64,
+	) -> Option<StorageValue> {
+		self.backend
+			.binary_merkle_tree_child_storage(child_info, index)
+			.expect(EXT_NOT_ALLOWED_TO_FAIL)
+	}
+
 	fn child_storage_hash(&self, child_info: &ChildInfo, key: &[u8]) -> Option<Vec<u8>> {
 		let _guard = guard();
 		let result = self
