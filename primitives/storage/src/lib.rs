@@ -316,7 +316,8 @@ impl ChildInfo {
 		match self {
 			ChildInfo::ParentKeyId(ChildTrieParentKeyId { data }) =>
 				ChildType::ParentKeyId.new_prefixed_key(data.as_slice()),
-			ChildInfo::BinaryMerkleTree(_) => todo!(),
+			ChildInfo::BinaryMerkleTree(ChildTrieParentKeyId { data }) =>
+				ChildType::BinaryMerkleTree.new_prefixed_key(data.as_slice()),
 		}
 	}
 
@@ -328,7 +329,10 @@ impl ChildInfo {
 				ChildType::ParentKeyId.do_prefix_key(&mut data);
 				PrefixedStorageKey(data)
 			},
-			ChildInfo::BinaryMerkleTree(_) => todo!(),
+			ChildInfo::BinaryMerkleTree(ChildTrieParentKeyId { mut data }) => {
+				ChildType::BinaryMerkleTree.do_prefix_key(&mut data);
+				PrefixedStorageKey(data)
+			},
 		}
 	}
 

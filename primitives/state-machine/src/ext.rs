@@ -1101,6 +1101,45 @@ mod tests {
 	}
 
 	#[test]
+	fn binary_merkle_tree_child_storage_works() {
+		let child_info = ChildInfo::new_binary_merkle_tree(b"Child1");
+		let child_info = &child_info;
+		let mut cache = StorageTransactionCache::default();
+		let mut overlay = OverlayedChanges::default();
+		overlay.set_child_storage(child_info, vec![20], None);
+		overlay.set_child_storage(child_info, vec![30], Some(vec![31]));
+		let backend = (
+			Storage {
+				top: map![],
+				children_default: map![
+					child_info.storage_key().to_vec() => StorageChild {
+						data: map![
+							number_to_vec(1) => vec![10],
+							number_to_vec(2) => vec![20],
+							number_to_vec(3) => vec![40]
+						],
+						child_info: child_info.to_owned(),
+					}
+				],
+			},
+			StateVersion::default(),
+		)
+			.into();
+
+		let ext = TestExt::new(&mut overlay, &mut cache, &backend, None);
+
+		assert_eq!(ext.binary_merkle_tree_child_storage(child_info, &1), Some(vec![10]));
+		assert_eq!(ext.binary_merkle_tree_child_storage(child_info, &2), None);
+		assert_eq!(ext.binary_merkle_tree_child_storage(child_info, &3), Some(vec![31]));
+	}
+
+	fn number_to_vec(n: u8) -> Vec<u8> {
+		n.to_string()
+			.as_bytes()
+			.to_vec()
+	}
+
+	#[test]
 	fn clear_prefix_cannot_delete_a_child_root() {
 		let child_info = ChildInfo::new_default(b"Child1");
 		let child_info = &child_info;

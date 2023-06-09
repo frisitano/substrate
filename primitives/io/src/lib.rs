@@ -495,8 +495,15 @@ pub trait DefaultChildStorage {
 	}
 }
 
+/// Interface for accessing the child storage for binary merkle child tree,
+/// from within the runtime.
 #[runtime_interface]
 pub trait BinaryMerkleTreeChildStorage {
+
+	/// Get storage value for a given index of a leaf node from the binary merkle child tree.
+	///
+	/// Parameter `storage_key` is the unprefixed location of the root of the child tree in the
+	/// parent trie. Result is `None` if the value for `index` in the child storage can not be found.
 	fn get_leaf(&self, storage_key: &[u8], index: &u64) -> Option<Vec<u8>> {
 		let child_info = ChildInfo::new_binary_merkle_tree(storage_key);
 		self.binary_merkle_tree_child_storage(&child_info, index).map(|s| s.to_vec())

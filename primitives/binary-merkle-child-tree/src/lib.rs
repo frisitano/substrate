@@ -39,3 +39,7 @@ pub fn read_child_tree_value<H: Hasher, DB: HashDBRef<H, DBValue>>(
 		.value(index)
 		.map(|x| x.map(|val| val.to_vec()))
 }
+
+pub fn empty_child_trie_root<H: Hasher>() -> H::Out {
+	Default::default()
+}
